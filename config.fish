@@ -9,7 +9,7 @@ set -gx LC_CTYPE en_US.UTF-8
 set -gx LANG en_US.UTF-8
 
 # Event handlers:
-#   list directory when we change into it. 
+#   list directory when we change into it.
 function ls_dir --on-variable PWD
     set -l count (ls | wc -l)
     print_bluebg ' changed to '$PWD
@@ -23,20 +23,9 @@ function ls_dir --on-variable PWD
 end
 
 #   automatically activate tox virtualenvs.
-function auto_toxenv --on-variable PWD
-    if functions -q exit_auto_toxenv
-        exit_auto_toxenv
-    end
-    if [ -d .tox ]
-        toxenv
-        if functions -q deactivate
-            function exit_auto_toxenv
-                deactivate
-                functions -e exit_auto_toxenv
-            end
-        end
-    end
-end
+# function auto_toxenv --on-variable PWD
+#     toxenv -q
+# end
 
 #   show current user@host:dir before the prompt.
 function pre_prompt_status --on-event fish_prompt
