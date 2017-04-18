@@ -12,7 +12,7 @@ set -gx LANG en_US.UTF-8
 #   list directory when we change into it.
 function ls_dir --on-variable PWD
     set -l count (ls | wc -l)
-    print_bluebg ' changed to '$PWD
+    print_color grey '#004' ' changed to '$PWD' '
     if [ $count -gt 30 ]
         echo '...too many files to list'
     else if [ $count -gt 10 ]
@@ -31,17 +31,24 @@ end
 function pre_prompt_status --on-event fish_prompt
     set prev_status $status
     if [ $prev_status -ne 0 ]
-        echo (set_color '#f44')"exit code: $prev_status"(set_color normal)
+        print_color '#f44' black "exit code: $prev_status"
     end
-    set -l top_prompt " $USER@"(prompt_hostname):(pwd)" "
+    echo
+    set -g fish_prompt_pwd_dir_length 0
+    set -l top_prompt " $USER@"(prompt_hostname):(prompt_pwd)" "
+    set -g fish_prompt_pwd_dir_length 1
     if [ (string length $top_prompt) -gt $COLUMNS ]
         set top_prompt " $USER@"(prompt_hostname):(prompt_pwd)" "
     end
-    print_bluebg $top_prompt
+    if [ $COLUMNS -gt 78 ]
+        set top_prompt (printf '%-78s' $top_prompt)
+    end
+
+    print_color white '#048' $top_prompt
 end
 
 # Helper functions.
-function print_bluebg
-    echo (set_color -b '#004')$argv[1](set_color normal)
+function print_color -a fg bg message
+    echo (set_color $fg -b $bg)$message(set_color normal)
 end
 
