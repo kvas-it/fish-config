@@ -22,6 +22,22 @@ function ls_dir --on-variable PWD
     end
 end
 
+#   automatically activate tox virtualenvs.
+function auto_toxenv --on-variable PWD
+    if functions -q exit_auto_toxenv
+        exit_auto_toxenv
+    end
+    if [ -d .tox ]
+        toxenv
+        if functions -q deactivate
+            function exit_auto_toxenv
+                deactivate
+                functions -e exit_auto_toxenv
+            end
+        end
+    end
+end
+
 #   show current user@host:dir before the prompt.
 function pre_prompt_status --on-event fish_prompt
     set prev_status $status
