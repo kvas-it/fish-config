@@ -12,7 +12,7 @@ set -gx LANG en_US.UTF-8
 #   list directory when we change into it.
 function ls_dir --on-variable PWD
     set -l count (ls | wc -l)
-    print_color grey '#004' ' changed to '$PWD' '
+    print_color grey '#004' '--> '$PWD':'
     if [ $count -gt 30 ]
         echo '...too many files to list'
     else if [ $count -gt 10 ]
@@ -35,7 +35,7 @@ function pre_prompt_status --on-event fish_prompt
     end
     echo
     set -g fish_prompt_pwd_dir_length 0
-    set -l top_prompt " $USER@"(prompt_hostname):(prompt_pwd)" "
+    set -l top_prompt "[ $USER@"(prompt_hostname):(prompt_pwd)" ]"
     set -g fish_prompt_pwd_dir_length 1
     if [ (string length $top_prompt) -gt $COLUMNS ]
         set top_prompt " $USER@"(prompt_hostname):(prompt_pwd)" "
