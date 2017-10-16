@@ -10,10 +10,10 @@ function devinstall
         set -l name (python setup.py --name)
         pip uninstall -yq $name
         python setup.py -q develop
-        echo "Activated $env and installed $name in development mode"
+        echo "Installed $name in development mode"
     else
         set -gx PYTHONPATH (pwd)
-        echo "Activated $env and set PYTHONPATH to $PYTHONPATH"
+        echo "No setup.py found. PYTHONPATH is set to $PYTHONPATH"
     end
 end
 

@@ -1,7 +1,7 @@
 # Configuration for Fish (see https://fishshell.com/)
 
 # Path
-# set -gx PATH ~/bin ~/opt/bin $PATH
+set -gx PATH ~/bin ~/opt/bin ~/.cargo/bin $PATH
 
 # MacOS X locale fix.
 set -gx LC_ALL en_US.UTF-8
